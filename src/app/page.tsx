@@ -2,12 +2,16 @@
 
 import { Header } from '@/components/Header'
 import { Selector } from '../components/Selector'
+import { useContext } from 'react'
+import { HueContext } from '@/context/HueContext'
+import { useRouter } from 'next/navigation'
 
 export default function Home() {
-  const colorList = new Array(3).fill('')
+  const { isItAbleToTest } = useContext(HueContext)
+  const router = useRouter()
 
-  function addToColorList(color: string, index: number) {
-    colorList[index] = color
+  function handleClick() {
+    isItAbleToTest() === 1 && router.push('/combination')
   }
 
   return (
@@ -15,13 +19,13 @@ export default function Home() {
       <Header />
 
       <div className="flex flex-col gap-8">
-        <Selector addToColorList={addToColorList} id={1} />
-        <Selector addToColorList={addToColorList} id={2} />
-        <Selector addToColorList={addToColorList} id={3} />
+        <Selector id={0} />
+        <Selector id={1} />
+        <Selector id={2} />
       </div>
 
       <button
-        onClick={() => console.log(colorList)}
+        onClick={handleClick}
         className="uppercase font-khula text-center bg-custom-dark-gray text-white w-full mt-7 text-2xl font-black leading-none p-3 rounded-lg hover:bg-black"
       >
         Test

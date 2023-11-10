@@ -1,15 +1,16 @@
 'use client'
 
-import { useState, ChangeEvent } from 'react'
+import { HueContext } from '@/context/HueContext'
+import { useState, ChangeEvent, useContext } from 'react'
 
 interface SelectorProps {
-  addToColorList: (color: string, index: number) => void
   id: number
 }
 
-export function Selector({ addToColorList, id }: SelectorProps) {
+export function Selector({ id }: SelectorProps) {
   const [color, setColor] = useState('')
   const [bgColor, setBgColor] = useState('#e4e4e4')
+  const { addToColorList } = useContext(HueContext)
 
   function handleColorChange(event: ChangeEvent<HTMLInputElement>) {
     const textColor = event.target.value
@@ -17,8 +18,10 @@ export function Selector({ addToColorList, id }: SelectorProps) {
     if (textColor.length === 6) {
       setBgColor(`#${textColor}`)
       addToColorList(`#${textColor}`, id)
+    } else if (textColor.length < 6) {
+      setBgColor('#e4e4e4')
+      addToColorList('', id)
     }
-    textColor.length < 6 && setBgColor('#e4e4e4')
   }
 
   return (

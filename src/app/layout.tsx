@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter, Khula } from 'next/font/google'
 import './globals.css'
+import { HueContextProvider } from '@/context/HueContext'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 const khula = Khula({
@@ -24,7 +25,7 @@ export default function RootLayout({
       <body
         className={`${inter.className} ${khula.className} h-screen w-screen flex flex-col justify-center items-center`}
       >
-        {children}
+        <HueContextProvider>{children}</HueContextProvider>
       </body>
     </html>
   )
