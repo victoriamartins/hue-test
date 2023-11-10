@@ -2,14 +2,22 @@
 
 import { useState, ChangeEvent } from 'react'
 
-export function Selector() {
+interface SelectorProps {
+  addToColorList: (color: string, index: number) => void
+  id: number
+}
+
+export function Selector({ addToColorList, id }: SelectorProps) {
   const [color, setColor] = useState('')
   const [bgColor, setBgColor] = useState('#e4e4e4')
 
   function handleColorChange(event: ChangeEvent<HTMLInputElement>) {
     const textColor = event.target.value
     setColor(textColor)
-    textColor.length === 6 && setBgColor(`#${textColor}`)
+    if (textColor.length === 6) {
+      setBgColor(`#${textColor}`)
+      addToColorList(`#${textColor}`, id)
+    }
     textColor.length < 6 && setBgColor('#e4e4e4')
   }
 
