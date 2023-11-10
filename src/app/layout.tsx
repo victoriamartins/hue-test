@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 const khula = Khula({
   subsets: ['latin'],
   variable: '--font-khula',
-  weight: ['300', '700', '800'],
+  weight: ['300', '600', '700', '800'],
 })
 
 export const metadata: Metadata = {
