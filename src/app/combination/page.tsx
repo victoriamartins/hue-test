@@ -1,19 +1,32 @@
+'use client'
+
 import { Header } from '@/components/Header'
 import { Sample } from '@/components/Sample'
+import { HueContext } from '@/context/HueContext'
+import { useContext } from 'react'
 
 export default function Combination() {
+  const { colorList, isItAbleToTest } = useContext(HueContext)
+
   return (
     <div className="w-[360px]">
       <Header />
-
-      <div className="flex flex-col gap-6">
-        <Sample background="#99002b" color="#00ff1a" />
-        <Sample background="#99002b" color="#ff8000" />
-        <Sample background="#ff8000" color="#00ff1a" />
-        <Sample background="#ff8000" color="#99002b" />
-        <Sample background="#00ff1a" color="#ff8000" />
-        <Sample background="#00ff1a" color="#99002b" />
-      </div>
+      {isItAbleToTest() === 1 ? (
+        <div className="flex flex-col gap-6">
+          {colorList.map((item, index) => {
+            const otherColors = colorList.filter((it, id) => id !== index)
+            return otherColors.map((color) => {
+              return (
+                <Sample background={item} color={color} key={Math.random()} />
+              )
+            })
+          })}
+        </div>
+      ) : (
+        <p className="text-center font-bold text-lg">
+          You need to choose three hues first.
+        </p>
+      )}
     </div>
   )
 }

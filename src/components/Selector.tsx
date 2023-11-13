@@ -11,14 +11,15 @@ export function Selector({ id }: SelectorProps) {
   const [color, setColor] = useState('')
   const [bgColor, setBgColor] = useState('#e4e4e4')
   const { addToColorList } = useContext(HueContext)
+  const hexRegex = /^([0-9A-Fa-f]{6})/
 
   function handleColorChange(event: ChangeEvent<HTMLInputElement>) {
     const textColor = event.target.value
     setColor(textColor)
-    if (textColor.length === 6) {
+    if (textColor.length === 6 && hexRegex.test(textColor)) {
       setBgColor(`#${textColor}`)
       addToColorList(`#${textColor}`, id)
-    } else if (textColor.length < 6) {
+    } else {
       setBgColor('#e4e4e4')
       addToColorList('', id)
     }
